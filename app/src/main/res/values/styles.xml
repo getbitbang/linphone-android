@@ -60,6 +60,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="hidden">
+        <item name="android:visibility">gone</item>
+    </style>
+
     <!-- About related -->
 
     <style name="about_license_font" parent="@android:style/TextAppearance.Medium">

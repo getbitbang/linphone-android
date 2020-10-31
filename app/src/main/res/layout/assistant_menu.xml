@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/account_creation"
-                    style="@style/button_font"
+                    style="@style/hidden"
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_margin="20dp"
@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/account_connection"
-                    style="@style/button_font"
+                    style="@style/hidden"
                     android:gravity="center"
                     android:padding="10dp"
                     android:layout_margin="20dp"
