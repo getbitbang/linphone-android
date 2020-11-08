@@ -26,8 +26,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import org.linphone.R;
 import org.linphone.core.tools.Log;
 import org.linphone.settings.LinphonePreferences;
@@ -43,19 +42,24 @@ public class FirebasePushHelper implements PushNotificationUtils.PushHelperInter
                 "[Push Notification] firebase push sender id "
                         + context.getString(R.string.gcm_defaultSenderId));
         try {
-            FirebaseInstanceId.getInstance()
-                    .getInstanceId()
+            FirebaseMessaging.getInstance()
+                    .getToken()
                     .addOnCompleteListener(
-                            new OnCompleteListener<InstanceIdResult>() {
+                            new OnCompleteListener<String>() {
                                 @Override
-                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                public void onComplete(@NonNull Task<String> task) {
                                     if (!task.isSuccessful()) {
-                                        Log.e(
-                                                "[Push Notification] firebase getInstanceId failed: "
-                                                        + task.getException());
+                                        Log.i(
+                                                "TAG",
+                                                "Fetching FCM registration token failed",
+                                                task.getException());
                                         return;
                                     }
-                                    String token = task.getResult().getToken();
+
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+
+                                    // Log and toast
                                     Log.i("[Push Notification] firebase token is: " + token);
                                     LinphonePreferences.instance()
                                             .setPushNotificationRegistrationID(token);
