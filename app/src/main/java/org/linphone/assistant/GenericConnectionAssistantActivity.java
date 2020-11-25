@@ -19,6 +19,8 @@
  */
 package org.linphone.assistant;
 
+import static okhttp3.HttpUrl.*;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,12 +29,21 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import java.io.IOException;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.linphone.LinphoneManager;
 import org.linphone.R;
 import org.linphone.core.AccountCreator;
 import org.linphone.core.Core;
 import org.linphone.core.TransportType;
 import org.linphone.core.tools.Log;
+import org.linphone.settings.LinphonePreferences;
 
 public class GenericConnectionAssistantActivity extends AssistantActivity implements TextWatcher {
     private TextView mLogin;
@@ -73,6 +84,12 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
             reloadDefaultAccountCreatorConfig();
         }
 
+        try {
+            saveDeviceSipUserIdToCalltureDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         AccountCreator accountCreator = getAccountCreator();
         accountCreator.setUsername(mUsername.getText().toString());
         accountCreator.setDomain(mDomain.getText().toString());
@@ -92,6 +109,55 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
         }
 
         createProxyConfigAndLeaveAssistant(true);
+    }
+
+    private final OkHttpClient client = new OkHttpClient();
+
+    public void saveDeviceSipUserIdToCalltureDatabase() throws Exception {
+        String phoneNumber = getDevicePhoneNumber();
+        String deviceToken = LinphonePreferences.instance().getPushNotificationRegistrationID();
+        String sipUserId = mUsername.getText().toString();
+
+        final String BaseUrl = "https://e4a8fe29f1b1.ngrok.io";
+
+        Builder urlBuilder =
+                parse(BaseUrl + "/notifications/saveDeviceSipUserIdToCalltureDatabase")
+                        .newBuilder();
+        urlBuilder.addQueryParameter("type", "Android");
+        urlBuilder.addQueryParameter("deviceToken", deviceToken);
+        urlBuilder.addQueryParameter("sipUserId", sipUserId);
+        urlBuilder.addQueryParameter("telNo", phoneNumber);
+
+        String url = urlBuilder.build().toString();
+        Request request = new Request.Builder().url(url).build();
+
+        client.newCall(request)
+                .enqueue(
+                        new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response)
+                                    throws IOException {
+                                try (ResponseBody responseBody = response.body()) {
+                                    if (!response.isSuccessful())
+                                        throw new IOException("Unexpected code " + response);
+
+                                    Headers responseHeaders = response.headers();
+                                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                                        System.out.println(
+                                                responseHeaders.name(i)
+                                                        + ": "
+                                                        + responseHeaders.value(i));
+                                    }
+
+                                    System.out.println(responseBody.string());
+                                }
+                            }
+                        });
     }
 
     @Override

@@ -779,7 +779,7 @@ public class LinphonePreferences {
         }
     }
 
-    private String getPushNotificationRegistrationID() {
+    public String getPushNotificationRegistrationID() {
         if (getConfig() == null) return null;
         return getConfig().getString("app", "push_notification_regid", null);
     }
