@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "330032978009",
-    "firebase_url": "https://callture-uc.firebaseio.com",
-    "project_id": "callture-uc",
-    "storage_bucket": "callture-uc.appspot.com"
+    "project_number": "41025459850",
+    "firebase_url": "https://callture-notifications.firebaseio.com",
+    "project_id": "callture-notifications",
+    "storage_bucket": "callture-notifications.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:330032978009:android:f36acda3af9e58e2767948",
+        "mobilesdk_app_id": "1:41025459850:android:6168209728a44f7a7fff73",
         "android_client_info": {
-          "package_name": "callture.uc.android"
+          "package_name": "callture.linphone.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "330032978009-4p9ck6ikpv2tr7n3gghlmq97tunkvo8p.apps.googleusercontent.com",
+          "client_id": "41025459850-m0uve1fec76beg0lckb1dda7mthdv0fh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDxDYlZ6dwyEPadGksm5xiOx_HHNkun2-E"
+          "current_key": "AIzaSyD5OELp3pqZXNA_eADbvoFvb6MhcL7D3JI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "330032978009-4p9ck6ikpv2tr7n3gghlmq97tunkvo8p.apps.googleusercontent.com",
+              "client_id": "41025459850-m0uve1fec76beg0lckb1dda7mthdv0fh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

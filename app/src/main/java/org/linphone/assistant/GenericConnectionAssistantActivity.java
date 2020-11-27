@@ -118,7 +118,7 @@ public class GenericConnectionAssistantActivity extends AssistantActivity implem
         String deviceToken = LinphonePreferences.instance().getPushNotificationRegistrationID();
         String sipUserId = mUsername.getText().toString();
 
-        final String BaseUrl = "https://e4a8fe29f1b1.ngrok.io";
+        final String BaseUrl = "https://wapi.callture.net";
 
         Builder urlBuilder =
                 parse(BaseUrl + "/notifications/saveDeviceSipUserIdToCalltureDatabase")
