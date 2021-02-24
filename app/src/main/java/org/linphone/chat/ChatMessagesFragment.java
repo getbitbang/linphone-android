@@ -50,6 +50,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.core.view.inputmethod.InputConnectionCompat;
@@ -1451,6 +1452,12 @@ public class ChatMessagesFragment extends Fragment
     @Override
     public void onChatMessageParticipantImdnStateChanged(
             ChatRoom cr, ChatMessage msg, ParticipantImdnState state) {}
+
+    @Override
+    public void onChatMessageSending(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {}
+
+    @Override
+    public void onNewEvent(@NonNull ChatRoom chatRoom, @NonNull EventLog eventLog) {}
 
     @Override
     public void onSubjectChanged(ChatRoom cr, EventLog event) {
